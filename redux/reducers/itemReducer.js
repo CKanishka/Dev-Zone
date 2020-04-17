@@ -30,8 +30,7 @@ export default function(state=initialState,action){
             }  
         case 'edit-item':
             return{
-                ...state,
-                items:action.payload
+                ...state 
             }         
         case 'items-loading':
             return{
