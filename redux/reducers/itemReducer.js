@@ -23,16 +23,16 @@ export default function(state=initialState,action){
                 items:action.payload,
                 loading:false
             }
-        case 'delete-item':
-            return{
-                ...state,
-                items:state.items.filter((item)=>item._id!==action.payload)
-            }  
         case 'add-item':
             return{
                 ...state,
                 items:[action.payload,...state.items]
-            }     
+            }  
+        case 'edit-item':
+            return{
+                ...state,
+                items:action.payload
+            }         
         case 'items-loading':
             return{
                 ...state,

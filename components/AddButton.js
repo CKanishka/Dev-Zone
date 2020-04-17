@@ -14,13 +14,13 @@ const AddButton = (props) => {
         <div className="modal fade mt-2 pt-3" id="main-modal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
             <div className="modal-dialog  modal-dialog-centered" >
                 <div className="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle"> {!props.item.isAuthenticated?"Please login or register":"Enter post details here"}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <div className="modal-header">
+                    <h5 className="modal-title" id="exampleModalCenterTitle"> {!props.item.isAuthenticated?"Please login or register":"Enter post details here"}</h5>
+                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div className="modal-body">
                     {!props.item.isAuthenticated?<LoginForm />:<InputForm />}
                 </div>
                 </div>

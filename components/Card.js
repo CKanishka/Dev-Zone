@@ -1,18 +1,21 @@
 import React from 'react';
 import Router from 'next/router';
 const handleClick = (slug) => {
+
     Router.push({
         pathname: '/blog',
         query: {id: slug },
     })
 }
+// {content.length>100?`${content.substring(0,100)}...`:content}
 const Card = (props) => {
+    const {_id,content,title} = props.item
     return (
-        <div class="card custom-card">
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <div class="btn btn-custom" onClick={()=>handleClick('123')}>Read more ></div>
+        <div className="card custom-card">
+            <div className="card-body">
+                <h5 className="card-title">{title}</h5>
+                <div dangerouslySetInnerHTML={{ __html: content }} />
+                <div className="btn btn-custom" onClick={()=>handleClick(_id)}>Read more ></div>
             </div>
         </div>
     )

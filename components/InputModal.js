@@ -1,10 +1,19 @@
 import React from 'react';
-import axios from 'axios';
+import dynamic from 'next/dynamic';
 import {connect} from 'react-redux';
+import {addItem} from "../redux/actions/itemActions";
+import { EditorState, convertToRaw } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+const Editor = dynamic(
+    () => import('react-draft-wysiwyg').then(mod => mod.Editor),
+    { ssr: false }
+)
 class InputModal extends React.Component{
     state={
-        content:"",
         title:"",
+        content:"",
+        editorState: EditorState.createEmpty()
     };
     onChange = (e) => {
         this.setState({
@@ -18,26 +27,17 @@ class InputModal extends React.Component{
         const newItem = {
             name:this.props.item.name,
             title:this.state.title,
-            content:this.state.content,
+            content:`${draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))}`
         };
-        if(!this.props.edit){
-            axios
-            .post(`/api`,newItem)
-            .then(res => alert(`Hi, ${this.props.item.name} your post has been published`))
-            .catch(err => console.log(err))
-            this.toggle();
-            return
-        }
-        else{
-            axios
-            .put(`/api/${this.props.id}`,newItem)
-            .then(res => alert(`Hi, ${this.state.name||this.props.name} your blog has been edited. Next time you login, your changes will be visible.`))
-            .catch(err => console.log(err))
-            this.toggle();
-            return
-        }
+        this.props.addItem(newItem)
+         
     };
     
+    onEditorStateChange = (editorState) => {
+        this.setState({
+          editorState
+        });
+      };
     
      
     render(){
@@ -59,10 +59,14 @@ class InputModal extends React.Component{
                                 </div>
                                 <div className="col-sm-12">
                                     <label>Content</label>
-                                    <textarea name="content" cols="40" rows="10" className="form-control textarea" placeholder="Enter post content" onChange={this.onChange} required></textarea>
+                                    <Editor
+                                        editorState={this.state.editorState}
+                                        editorClassName="demo-editor"
+                                        onEditorStateChange={this.onEditorStateChange}
+                                        />
                                 </div>
                                 <div className="col-sm-12">
-                                    <input type="submit" className="btn btn-primary mb-4 mb-lg-0" value="Submit" data-dismiss="modal"/>
+                                    <input type="submit" className="btn btn-primary mb-4 mb-lg-0" value="Submit"/>
                                 </div>
                                 
                             </div>
@@ -75,4 +79,5 @@ class InputModal extends React.Component{
 }
 export default connect(
     state => state,
+    {addItem}
 )(InputModal);

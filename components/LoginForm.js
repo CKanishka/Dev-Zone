@@ -60,7 +60,7 @@ class LoginForm extends React.Component{
                             <div className="col-lg-6">
                             <img alt="banner"
                                  className="img-fluid"
-                                 src="/static/assets/images/logo3.png" />
+                                 src="/static/assets/images/logo_devzone.png" />
                             <button className="btn btn-warning" style={{padding: "11px 30px"}} onClick={this.toggleLogin}>{this.state.login?"Register":"Login"}</button>     
                             </div>  
                         </div>

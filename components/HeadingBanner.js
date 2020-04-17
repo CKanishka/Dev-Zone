@@ -8,7 +8,7 @@ const HeadingBanner = () => {
                     <div className="col-lg-6 col-md-6">
                     <img alt="banner"
                                 className="img-fluid float-left"
-                                src={'/static/assets/images/logo3.png'} />
+                                src={'/static/assets/images/logo_devzone.png'} />
                     </div>
                     <div className="col-lg-6 col-md-6 col-sm-12 text-right">
                         <img alt="banner"

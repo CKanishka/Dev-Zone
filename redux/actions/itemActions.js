@@ -3,16 +3,17 @@ import axios from 'axios';
 
 export const loginUser = (email,password,noRedirect) => dispatch => {
     axios
-    .post(`https://blogplanet.herokuapp.com/api/authenticate`,{email,password})
+    .post(`http://localhost:5000/api/authenticate`,{email,password})
     .then(res => {
         if (res.status === 200) {
+            console.log(res)
             alert("Logged in successfully")
             dispatch({
                 type:'authenticated',
-                payload:{email:email,name:"dev"}
+                payload:{email:email,name:res.data.name}
             });
             if(!noRedirect)
-                Router.push('/home')
+                Router.push('/')
         } 
         else {
             const error = new Error(res.error);
@@ -31,7 +32,7 @@ export const registerUser = (name,email,password,password2,noRedirect) => dispat
         return   
    }
    axios
-   .post(`https://blogplanet.herokuapp.com/api/register`,{email,password})
+   .post(`http://localhost:5000/api/register`,{name,email,password})
     .then(res => {
         if (res.status === 200) {
             alert("Registered Successfully! Welcome to Dev Zone")
@@ -40,7 +41,7 @@ export const registerUser = (name,email,password,password2,noRedirect) => dispat
                 payload:{email:email,name:name}
             });
             if(!noRedirect)
-                Router.push('/home')
+                Router.push('/')
             
         } else {
         const error = new Error(res.error);
@@ -67,28 +68,39 @@ export const getItems = () => dispatch => {
 
 };
 
-export const deleteItem = id => dispatch => {
-    axios.delete(`http://localhost:5000/api/${id}`).then(res =>
-      dispatch({
-        type: 'delete-item',
-        payload: id
-      })
-    );
-  };
-
-
-
 export const addItem = (item) =>dispatch=> {
+    console.log('adding item')
     axios
         .post('http://localhost:5000/api',item)
         .then(res=>{
-            dispatch({
-                type:'add-item',
-                payload:res.data
-            });
+            if (res.status === 200) {
+                alert(`Hi, ${item.name} your post has been published`)
+                dispatch({
+                    type:'add-item',
+                    payload:res.data
+                });
+            }
+            else {
+                const error = new Error(res.error);
+                throw error;
+            }
         })
+        .catch(err => {
+            console.error(err);
+            alert('Error publishing post, please try again');
+        });
     
 };
+export const editItem = (id,item) => dispatch => {
+    axios.put(`http://localhost:5000/api/${id}`,item)
+    .then(res =>{
+      dispatch({
+        type: 'edit-item',
+        payload: id
+      })
+    });
+  };
+
 
 export const itemsLoading = (item) => {
     return{

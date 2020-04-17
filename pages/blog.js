@@ -14,15 +14,17 @@ class Blog extends React.Component {
             <>
               <Head>
                   <title>Dev Zone</title>
-                  <link rel="icon" href="/favicon.ico" />
-                  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-                  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+                  <meta name="keywords" content="HTML5 Template" />
+                  <meta name="description" content="Dev Zone- A forum for developers by developers"/>
+                  <link rel="icon" href="/static/assets/images/logo_devzone.png" />
+                  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" async defer></script>
+                  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" async defer></script>
                   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
               </Head>
               <div className="banner">
                   <h1 className="text-center">Blog Details</h1>
               </div>
-              <BlogDetails likeCount={21}/>
+              <BlogDetails id={this.props.query.id}/>
               <Footer />
          </>
         )
