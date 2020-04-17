@@ -1,9 +1,9 @@
 import Router from 'next/router';
 import axios from 'axios';
-
+const baseURL = 'https://dev-zonebackend.herokuapp.com'
 export const loginUser = (email,password,noRedirect) => dispatch => {
     axios
-    .post(`http://localhost:5000/api/authenticate`,{email,password})
+    .post(`${baseURL}/api/authenticate`,{email,password})
     .then(res => {
         if (res.status === 200) {
             console.log(res)
@@ -32,7 +32,7 @@ export const registerUser = (name,email,password,password2,noRedirect) => dispat
         return   
    }
    axios
-   .post(`http://localhost:5000/api/register`,{name,email,password})
+   .post(`${baseURL}/api/register`,{name,email,password})
     .then(res => {
         if (res.status === 200) {
             alert("Registered Successfully! Welcome to Dev Zone")
@@ -58,7 +58,7 @@ export const registerUser = (name,email,password,password2,noRedirect) => dispat
 export const getItems = () => dispatch => {
     dispatch(itemsLoading());
     axios
-        .get('http://localhost:5000/api')
+        .get(`${baseURL}/api`)
         .then(res=>{
             dispatch({
                 type:'get-items',
@@ -71,7 +71,7 @@ export const getItems = () => dispatch => {
 export const addItem = (item) =>dispatch=> {
     console.log('adding item')
     axios
-        .post('http://localhost:5000/api',item)
+        .post(`${baseURL}/api`,item)
         .then(res=>{
             if (res.status === 200) {
                 alert(`Hi, ${item.name} your post has been published`)
@@ -92,7 +92,7 @@ export const addItem = (item) =>dispatch=> {
     
 };
 export const editItem = (id,item) => dispatch => {
-    axios.put(`http://localhost:5000/api/${id}`,item)
+    axios.put(`${baseURL}/api/${id}`,item)
     .then(res =>{
       dispatch({
         type: 'edit-item',
